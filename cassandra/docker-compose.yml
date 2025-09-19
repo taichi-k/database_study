@@ -1,0 +1,35 @@
+version: "3.8"
+services:
+  cass1:
+    image: cassandra:4.1
+    container_name: cass1
+    environment:
+      - CASSANDRA_CLUSTER_NAME=DemoCluster
+      - CASSANDRA_SEEDS=cass1
+    ports:
+      - "9042:9042"
+    networks: [cassnet]
+
+  cass2:
+    image: cassandra:4.1
+    container_name: cass2
+    environment:
+      - CASSANDRA_CLUSTER_NAME=DemoCluster
+      - CASSANDRA_SEEDS=cass1
+    networks: [cassnet]
+    depends_on: [cass1]
+
+# cass3を最初はコメントアウトしておき、cass1, cass2を起動後、insert_massive_data.pyで大量データを入れた後にcass3のコメントアウトを外して起動する
+# これにより、cass3が起動時に他のノードからデータをレプリケートして取得する様子が見れる
+  cass3:
+    image: cassandra:4.1
+    container_name: cass3
+    environment:
+      - CASSANDRA_CLUSTER_NAME=DemoCluster
+      - CASSANDRA_SEEDS=cass1
+    networks: [cassnet]
+    depends_on: [cass1, cass2]
+
+networks:
+  cassnet:
+    driver: bridge
