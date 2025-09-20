@@ -82,10 +82,9 @@ WebUIでグリグリとグラフを見れる。
 # duckDB
 
 最近キテるらしい。
-sqlite同様、組み込みで、データフォーマットが柔軟。いろいろ遊びたい。
+sqlite同様、組み込みで、データフォーマットが柔軟（CSVとかももちろんだし、pandasのdfとかも読み込める）。
 自動で並列化とか、SIMD（Single Instruction, Multiple Data）の活用により、大規模データの集計は、Pandasで読み込むより速いらしい。
 ベクトル化エンジンであり、列をベクトルとして扱う。
-
 
 # Redshift
 
